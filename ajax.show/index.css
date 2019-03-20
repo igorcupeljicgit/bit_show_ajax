@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.clearfix::before,
+.clearfix::after{
+    display: table;
+    content: "";
+}
+.claerfix::after{
+    clear: both;
+}
+
+.col-4{
+    text-align: center;
+   margin-bottom: 20px;
+}
+.col-4 p{
+    font-size: 1.3em;
+}
+.col-4 img{
+    width: 100%;
+    
+}
+.text-center{
+    text-align: center;
+}
+.row{
+    margin:0 100px;
+}
