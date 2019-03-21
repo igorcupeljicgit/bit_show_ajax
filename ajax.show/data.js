@@ -19,6 +19,19 @@ const dataModule = (() => {
         }
     }
 
+    class OneShow extends Show {
+        constructor(name, id, image, summary, cast) {
+            super(name, id, image);
+            this.summary = summary;
+            // this.seasons = seasons;
+            this.cast = cast;
+
+
+
+        }
+    }
+
+
     function fetchShow(onSuccess) {
 
         const request = `${API_BASE}/show`;
@@ -34,19 +47,26 @@ const dataModule = (() => {
         })
 
     }
-    function fetchSingleShow(onSuccesOneMovie,id){
 
-        const request=`${API_BASE}/shows/${id}?embed[]=seasons&embed[]=cast`;
+    function fetchSingleShow(onSucessOneMovie, id) {
 
-        $.get(request,function(show){
+        const request = `${API_BASE}/shows/${id}?embed[]=seasons&embed[]=cast`;
 
-        console.log(show);
+        $.get(request, (response) => {
+            const show = new OneShow(
+                response.name,
+                response.id,
+                response.image.medium,
+                response.summary,
+                response._embedded.cast
+            )
 
+            onSucessOneMovie(show);
+        })
 
-
-            
-        }  )
     }
+
+
 
 
 
