@@ -6,25 +6,22 @@ const ViewModule = (() => {
 
         newArray.forEach(function (element) {
 
+            const $newParagraf = $("<div>");
 
-            const newParagraf = $("<div>")
+            $newParagraf.addClass("col-4 movie-card");
 
-            newParagraf.addClass("col-4")
+            $newParagraf.attr("data-id", element.id);
 
-            newParagraf.attr("data-id", element.id)
-
-            console.log(element)
 
             const imageOnPage = $('<img>').attr('src', element.image.medium);
-
-            newParagraf.append(imageOnPage);
-            newParagraf.append($("<p>").append(element.name));
-            $(".row").prepend(newParagraf);
+            imageOnPage.attr("data-id", element.id);
+          
+           
+            $newParagraf.append(imageOnPage);
+            $newParagraf.append($("<p>").append(element.name).attr("data-id", element.id));
+            $(".row").prepend($newParagraf);
 
         })
-
-
-
     }
 
 

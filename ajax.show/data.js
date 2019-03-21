@@ -34,10 +34,28 @@ const dataModule = (() => {
         })
 
     }
+    function fetchSingleShow(onSuccesOneMovie,id){
+
+        const request=`${API_BASE}/shows/${id}?embed[]=seasons&embed[]=cast`;
+
+        $.get(request,function(show){
+
+        console.log(show);
+
+
+
+            
+        }  )
+    }
+
+
+
+
 
 
     return {
         fetchShow,
+        fetchSingleShow
 
     }
 
