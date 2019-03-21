@@ -24,7 +24,9 @@ const ViewModule = (() => {
         })
     }
     function showOnPageOneMovieInfo(oneShow) {
-        console.log(oneShow);
+      console.log(oneShow);
+      
+        $(".title").append($(`<h1>${oneShow.name}</h1>`));
         const $imageOfMovie = ($("<img>").attr("src", oneShow.image));
         const $divMovie = $("<div>").attr("class", "col-6").append($imageOfMovie);
         $imageOfMovie.css("width", "100%");
@@ -37,10 +39,12 @@ const ViewModule = (() => {
         $(".summary").prepend($divSummary);
         $(".oneMovie").prepend($divMovie);
         const $castDiv = $("<div>").addClass("col-6");
+        
         $castDiv.prepend("<h1>Cast List</h1>");
+        
         const $castList = $("<ul>")
         const $castArrey = oneShow.cast.slice(0, 6);
-        console.log($castArrey)
+
         $castArrey.forEach(function (element) {
             $castList.append($(`<li>${element.person.name}</li>`))
 
