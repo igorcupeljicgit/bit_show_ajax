@@ -1,51 +1,56 @@
-const main = ((data, view) => {
-  function setUpEventListeners() {
-    console.log("event listeners set");
-    const searchBar = $(".form-control");
-    searchBar.on("input", onSearchHandler);
-  }
-  //------HOME PAGE-------
+import { fetchShow, fetchSingleShow, searchShows } from "./data.js"
+import { showOnPage, showOnPageOneMovieInfo, displayListOfMovies } from "./view.js"
 
-  function init() {
-    console.log("init");
-    setUpEventListeners();
-    data.fetchShow(onSuccess);
-  }
+function setUpEventListeners() {
+  console.log("event listeners set");
+  const searchBar = $(".form-control");
+  searchBar.on("input", onSearchHandler);
+}
+//------HOME PAGE-------
 
-  function onSuccess(data) {
-    console.log("onsucc", data);
-    view.showOnPage(data);
-    $(".movie-card").on("click", movieclickhandler);
-  }
+function init() {
+  console.log("init");
+  setUpEventListeners();
+  fetchShow()
+    .then((request) => {
+      showOnPage(request);
+      $(".movie-card").on("click", movieclickhandler);
 
-  function movieclickhandler(event) {
-    const id = $(event.target).attr("data-id");
-    localStorage.setItem("id", id);
-    window.location.href = "./second.html";
-  }
+    });
+}
 
-  //-----SECOND PAGE------
-  function initSecondPage() {
-    setUpEventListeners();
-    const id = localStorage.getItem("id");
-    data.fetchSingleShow(onSuccessOneMovie, id);
-  }
 
-  function onSuccessOneMovie(data) {
-    view.showOnPageOneMovieInfo(data);
-  }
-  //--------SEARCH BAR--------
-  function onSearchHandler(event) {
-    const serachValue = $(event.target).val();
-    data.searchShows(onSearchSuccses, serachValue);
-  }
-  function onSearchSuccses(lsistOfShows) {
-    view.displayListOfMovies(lsistOfShows);
-    $(".list-group-item").on("click", movieclickhandler);
-  }
 
-  return {
-    init,
-    initSecondPage
-  };
-})(dataModule, ViewModule);
+function movieclickhandler(event) {
+  const id = $(event.target).attr("data-id");
+  localStorage.setItem("id", id);
+  window.location.href = "./second.html";
+}
+
+//-----SECOND PAGE------
+function initSecondPage() {
+  setUpEventListeners();
+  const id = localStorage.getItem("id");
+  fetchSingleShow(id)
+    .then((request) => {
+      showOnPageOneMovieInfo(request)
+      $(".movie-card").on("click", movieclickhandler);
+    });
+}
+
+
+//--------SEARCH BAR--------
+function onSearchHandler(event) {
+  const serachValue = $(event.target).val();
+  searchShows(serachValue)
+    .then(onSearchSuccses)
+}
+function onSearchSuccses(arreyOfShows) {
+  displayListOfMovies(arreyOfShows);
+  $(".list-group-item").on("click", movieclickhandler);
+}
+
+export {
+  init,
+  initSecondPage
+};

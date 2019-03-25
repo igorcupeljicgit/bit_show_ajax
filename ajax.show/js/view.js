@@ -1,72 +1,72 @@
-const ViewModule = (() => {
-  function showOnPage(newArray) {
-    newArray.forEach(function(element) {
-      const $newParagraf = $("<div>");
 
-      $newParagraf.addClass("col-4 movie-card");
+function showOnPage(newArray) {
+  newArray.forEach(function (element) {
+    const $newParagraf = $("<div>");
 
-      $newParagraf.attr("data-id", element.id);
+    $newParagraf.addClass("col-4 movie-card");
 
-      const imageOnPage = $("<img>").attr("src", element.image.medium);
-      imageOnPage.attr("data-id", element.id);
+    $newParagraf.attr("data-id", element.id);
 
-      $newParagraf.append(imageOnPage);
-      $newParagraf.append(
-        $("<p>")
-          .append(element.name)
-          .attr("data-id", element.id)
-      );
-      $(".row").prepend($newParagraf);
-    });
-  }
-  function showOnPageOneMovieInfo(oneShow) {
-    console.log(oneShow);
+    const imageOnPage = $("<img>").attr("src", element.image.medium);
+    imageOnPage.attr("data-id", element.id);
 
-    $(".title").append($(`<h1>${oneShow.name}</h1>`));
-    const $imageOfMovie = $("<img>").attr("src", oneShow.image);
-    const $divMovie = $("<div>")
-      .attr("class", "col-6")
-      .append($imageOfMovie);
-    $imageOfMovie.css("width", "100%");
-    $divMovie.append($imageOfMovie);
+    $newParagraf.append(imageOnPage);
+    $newParagraf.append(
+      $("<p>")
+        .append(element.name)
+        .attr("data-id", element.id)
+    );
+    $(".row").prepend($newParagraf);
+  });
+}
+function showOnPageOneMovieInfo(oneShow) {
+  // console.log(oneShow);
 
-    const $divSummary = $("<div>").addClass("col-12");
-    $divSummary.prepend($("<h1>Show details</h1>"));
-    $divSummary.append($(`<p>${oneShow.summary}</p>`));
+  $(".title").append($(`<h1>${oneShow.name}</h1>`));
+  const $imageOfMovie = $("<img>").attr("src", oneShow.image);
+  const $divMovie = $("<div>")
+    .attr("class", "col-6")
+    .append($imageOfMovie);
+  $imageOfMovie.css("width", "100%");
+  $divMovie.append($imageOfMovie);
 
-    $(".summary").prepend($divSummary);
-    $(".oneMovie").prepend($divMovie);
-    const $castDiv = $("<div>").addClass("col-6");
+  const $divSummary = $("<div>").addClass("col-12");
+  $divSummary.prepend($("<h1>Show details</h1>"));
+  $divSummary.append($(`<p>${oneShow.summary}</p>`));
 
-    $castDiv.prepend("<h1>Cast List</h1>");
+  $(".summary").prepend($divSummary);
+  $(".oneMovie").prepend($divMovie);
+  const $castDiv = $("<div>").addClass("col-6");
 
-    const $castList = $("<ul>");
-    const $castArrey = oneShow.cast.slice(0, 6);
+  $castDiv.prepend("<h1>Cast List</h1>");
 
-    $castArrey.forEach(function(element) {
-      $castList.append($(`<li>${element.person.name}</li>`));
-    });
+  const $castList = $("<ul>");
+  const $castArrey = oneShow.cast.slice(0, 6);
 
-    $castDiv.append($castList);
-    $(".oneMovie").append($castDiv);
-  }
+  $castArrey.forEach(function (element) {
+    $castList.append($(`<li>${element.person.name}</li>`));
+  });
 
-  function displayListOfMovies(listOfShows) {
-    let showName = "";
-    if (listOfShows.length > 0) {
-      listOfShows.forEach(show => {
-        showName += `<li data-id=${show.id} class=list-group-item>${
-          show.name
+  $castDiv.append($castList);
+  $(".oneMovie").append($castDiv);
+}
+
+function displayListOfMovies(listOfShows) {
+  let showName = "";
+  if (listOfShows.length > 0) {
+    listOfShows.forEach(show => {
+      showName += `<li data-id=${show.id} class=list-group-item>${
+        show.name
         }</li>`;
-      });
-    } else {
-      showName += `<li class=list-group-item>No Results</li>`;
-    }
-    $(".list-group").html(showName);
+    });
+  } else {
+    showName += `<li class=list-group-item>No Results</li>`;
   }
-  return {
-    showOnPage,
-    showOnPageOneMovieInfo,
-    displayListOfMovies
-  };
-})();
+  $(".list-group").html(showName);
+}
+export {
+  showOnPage,
+  showOnPageOneMovieInfo,
+  displayListOfMovies
+};
+
